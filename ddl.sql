@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS agencia (
 	FOREIGN KEY (banco_numero) REFERENCES banco (numero)
 );
 
-CREATE TABLE cliente (
+CREATE TABLE IF NOT EXISTS cliente (
 	numero BIGSERIAL PRIMARY KEY,
 	nome VARCHAR(120) NOT NULL,
 	email VARCHAR(250) NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE cliente (
 	data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE conta_corrente (
+CREATE TABLE IF NOT EXISTS conta_corrente (
 	banco_numero INTEGER NOT NULL,
 	agencia_numero INTEGER NOT NULL,
 	numero BIGINT NOT NULL,
@@ -37,14 +37,14 @@ CREATE TABLE conta_corrente (
 	FOREIGN KEY (cliente_numero) REFERENCES cliente (numero)
 );
 
-CREATE TABLE tipo_transacao (
+CREATE TABLE IF NOT EXISTS tipo_transacao (
 	id SMALLSERIAL PRIMARY KEY,
 	nome VARCHAR(50) NOT NULL,
 	ativo BOOLEAN NOT NULL DEFAULT TRUE,
 	data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE cliente_transacoes (
+CREATE TABLE IF NOT EXISTS cliente_transacoes (
 	id BIGSERIAL PRIMARY KEY,
 	banco_numero INTEGER NOT NULL,
 	agencia_numero INTEGER NOT NULL,
