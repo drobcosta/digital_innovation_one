@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS produto CASCADE;
 DROP TABLE IF EXISTS cliente CASCADE;
 DROP TABLE IF EXISTS cliente_endereco CASCADE;
 DROP TABLE IF EXISTS cliente_telefone CASCADE;
+DROP TABLE IF EXISTS periodo_contato CASCADE;
 DROP TABLE IF EXISTS status CASCADE;
 DROP TABLE IF EXISTS pedido CASCADE;
 DROP TABLE IF EXISTS pedido_produto CASCADE;
@@ -97,6 +98,23 @@ CREATE OR REPLACE VIEW vw_cliente_endereco AS (
     FROM cliente_endereco
 );
 
+CREATE TABLE IF NOT EXISTS periodo_contato (
+    id SMALLSERIAL NOT NULL,
+    nome VARCHAR(15) NOT NULL,
+	ativo BOOLEAN NOT NULL DEFAULT TRUE,
+	data_criacao TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT periodo_contato_pk PRIMARY KEY (id),
+	CONSTRAINT periodo_contato_unique_1 UNIQUE (nome)
+);
+
+CREATE OR REPLACE VIEW vw_periodo_contato AS (
+    SELECT  id,
+            nome,
+            ativo
+    FROM periodo_contato
+    WHERE ativo IS TRUE
+) WITH LOCAL CHECK OPTION;
+
 CREATE TABLE IF NOT EXISTS cliente_telefone (
 	id BIGSERIAL NOT NULL,
 	cliente_cpfcnpj VARCHAR(14) NOT NULL,
@@ -108,6 +126,7 @@ CREATE TABLE IF NOT EXISTS cliente_telefone (
 	data_criacao TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT cliente_telefone_pk PRIMARY KEY (id),
 	CONSTRAINT cliente_fk_1 FOREIGN KEY (cliente_cpfcnpj) REFERENCES cliente(cpfcnpj),
+	CONSTRAINT periodo_contato_fk_1 FOREIGN KEY (melhor_horario) REFERENCES periodo_contato(id),
 	CONSTRAINT cliente_telefone_unico UNIQUE (cliente_cpfcnpj,ddd,telefone,ramal)
 );
 
@@ -236,3 +255,8 @@ INSERT INTO vw_status (nome) VALUES ('Em rota') ON CONFLICT (nome) DO NOTHING;
 INSERT INTO vw_status (nome) VALUES ('Em devolução') ON CONFLICT (nome) DO NOTHING;
 INSERT INTO vw_status (nome) VALUES ('Entregue') ON CONFLICT (nome) DO NOTHING;
 INSERT INTO vw_status (nome) VALUES ('Cancelado') ON CONFLICT (nome) DO NOTHING;
+
+INSERT INTO vw_periodo_contato (nome) VALUES ('Manhã') ON CONFLICT (nome) DO NOTHING;
+INSERT INTO vw_periodo_contato (nome) VALUES ('Tarde') ON CONFLICT (nome) DO NOTHING;
+INSERT INTO vw_periodo_contato (nome) VALUES ('Noite') ON CONFLICT (nome) DO NOTHING;
+INSERT INTO vw_periodo_contato (nome) VALUES ('Madrugada') ON CONFLICT (nome) DO NOTHING;
