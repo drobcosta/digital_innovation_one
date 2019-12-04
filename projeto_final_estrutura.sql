@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS produto (
 	data_criacao TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT produto_pk PRIMARY KEY (numero_serie),
 	CONSTRAINT produto_categoria_fk_1 FOREIGN KEY (produto_categoria_id) REFERENCES produto_categoria(id),
-	CONSTRAINT produto_valor_check_1 CHECK (valor > 0)
+	CONSTRAINT produto_valor_check_1 CHECK (valor >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS cliente (
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS pedido_produto (
 	CONSTRAINT pedido_produto_pk PRIMARY KEY (id),
 	CONSTRAINT produto_fk_1 FOREIGN KEY (produto_numero_serie) REFERENCES produto(numero_serie),
 	CONSTRAINT produto_categoria_fk_1 FOREIGN KEY (produto_categoria_id) REFERENCES produto_categoria(id),
-	CONSTRAINT pedido_produto_produto_valor_check_1 CHECK (produto_valor > 0)
+	CONSTRAINT pedido_produto_produto_valor_check_1 CHECK (produto_valor >= 0)
 );
 
 ALTER TABLE IF EXISTS pedido DROP CONSTRAINT status_fk_1;
