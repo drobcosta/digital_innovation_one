@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS pedido (
 	status_id SMALLINT NOT NULL,
 	cliente_cpfcnpj VARCHAR(14) NOT NULL,
 	valor NUMERIC(15,2) NOT NULL,
-	data_ultima_atualizadao TIMESTAMP WITHOUT TIME ZONE,
+	data_ultima_atualizacao TIMESTAMP WITHOUT TIME ZONE,
 	data_criacao TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT pedido_pk PRIMARY KEY (id),
 	CONSTRAINT status_fk_1 FOREIGN KEY (status_id) REFERENCES status(id),
