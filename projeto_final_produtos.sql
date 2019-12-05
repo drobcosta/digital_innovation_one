@@ -1,5 +1,5 @@
-INSERT INTO produto (numero_serie, produto_categoria_id, nome, valor) VALUES 
-('0000000001' , 1, 'Liquidificador' , 99.90 ),
+INSERT INTO produto (numero_serie, produto_categoria_id, nome, valor) VALUES
+VALUES ('0000000001' , 1, 'Liquidificador' , 99.90 ),
 ('0000000002' , 1, 'Batedeira' , 79.90 ),
 ('0000000003' , 1, 'Mixer' , 29.90 ),
 ('0000000004' , 1, 'Grill' , 199.90 ),
